@@ -1,3 +1,17 @@
+# name: Testing
+# on: push
+
+# jobs:
+#   test_project:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: action/checkout@v2
+#     - name: Run Django unit tests
+#       run:  
+#         pip3 install --user django
+#         pythone3 manage.py test
+
+
 name: Testing
 on: push
 
@@ -5,8 +19,13 @@ jobs:
   test_project:
     runs-on: ubuntu-latest
     steps:
-    - uses: action/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'  # Specify the Python version
+    - name: Install dependencies
+      run: pip3 install --user django
     - name: Run Django unit tests
-      run:  
-        pip3 install --user django
-        pythone3 manage.py test
+      run: python3 manage.py test
